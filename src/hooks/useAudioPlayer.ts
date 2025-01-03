@@ -125,13 +125,11 @@ export const useAudioPlayer = (surah: Surah | null) => {
 
   useEffect(() => {
     if (!surah) return;
-
-    const audioPath = `/mp3/${surah.id.toString().padStart(2, '0')}${surah.name.tr.replace('û', 'u')}.mp3`;
     
-    const audio = new Audio(audioPath);
-    audioRef.current = audio;
+    const audioUrl = `https://ezanvaktipro.com/suremp3/${surah.id.toString().padStart(2, '0')}${surah.name.tr}.mp3`;
+    audioRef.current = new Audio(audioUrl);
 
-    fetch(audioPath)
+    fetch(audioUrl)
       .then(response => {
         setHasAudio(response.ok);
       })
