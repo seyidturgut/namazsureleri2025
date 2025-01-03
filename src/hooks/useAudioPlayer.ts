@@ -41,7 +41,7 @@ export function useAudioPlayer(surah: Surah | undefined | null) {
       return;
     }
 
-    const bgAudio = new Audio(`/src/data/mp3/${backgroundMusic}.mp3`);
+    const bgAudio = new Audio(`https://ezanvaktipro.com/suremp3/${backgroundMusic}.mp3`);
     bgMusicRef.current = bgAudio;
     bgAudio.loop = true;
     bgAudio.volume = 0.5;

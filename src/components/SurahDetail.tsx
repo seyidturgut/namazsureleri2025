@@ -2,7 +2,9 @@ import { useParams } from 'react-router-dom';
 import { Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Surah } from '../types';
 import { useAudioPlayer } from '../hooks/useAudioPlayer';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 import SurahContent from './surah/SurahContent';
+import FontSettings from './surah/FontSettings';
 
 interface Props {
   surahs: Surah[];
@@ -11,6 +13,9 @@ interface Props {
 export default function SurahDetail({ surahs }: Props) {
   const { id } = useParams<{ id: string }>();
   const surah = surahs.find((s) => s.id === Number(id));
+
+  const [arabicFontSize, setArabicFontSize] = useLocalStorage('arabicFontSize', 32);
+  const [translationFontSize, setTranslationFontSize] = useLocalStorage('translationFontSize', 16);
 
   const {
     isPlaying,
@@ -34,6 +39,13 @@ export default function SurahDetail({ surahs }: Props) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      <FontSettings
+        arabicFontSize={arabicFontSize}
+        translationFontSize={translationFontSize}
+        onArabicFontSizeChange={setArabicFontSize}
+        onTranslationFontSizeChange={setTranslationFontSize}
+      />
+
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-4">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-semibold text-secondary-light dark:text-secondary-dark">
@@ -44,7 +56,12 @@ export default function SurahDetail({ surahs }: Props) {
           </p>
         </div>
 
-        <SurahContent surah={surah} currentVerse={currentVerse} />
+        <SurahContent 
+          surah={surah} 
+          currentVerse={currentVerse}
+          arabicFontSize={arabicFontSize}
+          translationFontSize={translationFontSize}
+        />
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4">
@@ -101,7 +118,7 @@ export default function SurahDetail({ surahs }: Props) {
 
             <select
               value={backgroundMusic}
-              onChange={(e) => setBackgroundMusic(e.target.value)}
+              onChange={(e) => setBackgroundMusic(e.target.value as any)}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark border-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark"
             >
               <option value="">Arkaplan Müziği</option>

@@ -1,7 +1,6 @@
-import React from 'react';
-import { Minus, Plus, Type } from 'lucide-react';
+import { Minus, Plus } from 'lucide-react';
 
-interface FontSettingsProps {
+interface Props {
   arabicFontSize: number;
   translationFontSize: number;
   onArabicFontSizeChange: (size: number) => void;
@@ -12,61 +11,55 @@ export default function FontSettings({
   arabicFontSize,
   translationFontSize,
   onArabicFontSizeChange,
-  onTranslationFontSizeChange
-}: FontSettingsProps) {
-  const adjustSize = (current: number, change: number, min: number, max: number) => {
-    return Math.min(Math.max(current + change, min), max);
-  };
-
+  onTranslationFontSizeChange,
+}: Props) {
   return (
-    <div className="flex flex-col sm:flex-row gap-2 mt-4">
-      {/* Arapça Font Ayarı */}
-      <div className="flex-1 bg-white rounded-lg shadow-sm p-2.5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded bg-emerald-50 flex items-center justify-center">
-            <Type className="w-3.5 h-3.5 text-emerald-600" />
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-4">
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-sm font-medium text-secondary-light dark:text-secondary-dark mb-2">
+            Arapça Font Boyutu
+          </h3>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => onArabicFontSizeChange(Math.max(16, arabicFontSize - 2))}
+              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="text-sm text-primary-light dark:text-primary-dark">
+              {arabicFontSize}px
+            </span>
+            <button
+              onClick={() => onArabicFontSizeChange(Math.min(48, arabicFontSize + 2))}
+              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
           </div>
-          <span className="text-sm font-medium text-gray-900">Arapça</span>
         </div>
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={() => onArabicFontSizeChange(adjustSize(arabicFontSize, -2, 16, 48))}
-            className="w-7 h-7 rounded hover:bg-gray-100 active:bg-gray-200 text-gray-600 touch-manipulation flex items-center justify-center"
-          >
-            <Minus className="w-3.5 h-3.5" />
-          </button>
-          <span className="text-sm font-medium text-gray-900 w-6 text-center">{arabicFontSize}</span>
-          <button
-            onClick={() => onArabicFontSizeChange(adjustSize(arabicFontSize, 2, 16, 48))}
-            className="w-7 h-7 rounded hover:bg-gray-100 active:bg-gray-200 text-gray-600 touch-manipulation flex items-center justify-center"
-          >
-            <Plus className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
 
-      {/* Meal Font Ayarı */}
-      <div className="flex-1 bg-white rounded-lg shadow-sm p-2.5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded bg-blue-50 flex items-center justify-center">
-            <Type className="w-3.5 h-3.5 text-blue-600" />
+        <div>
+          <h3 className="text-sm font-medium text-secondary-light dark:text-secondary-dark mb-2">
+            Çeviri Font Boyutu
+          </h3>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => onTranslationFontSizeChange(Math.max(12, translationFontSize - 1))}
+              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+            >
+              <Minus className="w-4 h-4" />
+            </button>
+            <span className="text-sm text-primary-light dark:text-primary-dark">
+              {translationFontSize}px
+            </span>
+            <button
+              onClick={() => onTranslationFontSizeChange(Math.min(24, translationFontSize + 1))}
+              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
           </div>
-          <span className="text-sm font-medium text-gray-900">Meal</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <button
-            onClick={() => onTranslationFontSizeChange(adjustSize(translationFontSize, -1, 12, 24))}
-            className="w-7 h-7 rounded hover:bg-gray-100 active:bg-gray-200 text-gray-600 touch-manipulation flex items-center justify-center"
-          >
-            <Minus className="w-3.5 h-3.5" />
-          </button>
-          <span className="text-sm font-medium text-gray-900 w-6 text-center">{translationFontSize}</span>
-          <button
-            onClick={() => onTranslationFontSizeChange(adjustSize(translationFontSize, 1, 12, 24))}
-            className="w-7 h-7 rounded hover:bg-gray-100 active:bg-gray-200 text-gray-600 touch-manipulation flex items-center justify-center"
-          >
-            <Plus className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
     </div>

@@ -4,9 +4,11 @@ import { Surah } from '../../types';
 interface Props {
   surah: Surah;
   currentVerse: number;
+  arabicFontSize: number;
+  translationFontSize: number;
 }
 
-export default function SurahContent({ surah, currentVerse }: Props) {
+export default function SurahContent({ surah, currentVerse, arabicFontSize, translationFontSize }: Props) {
   const verseRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -32,10 +34,16 @@ export default function SurahContent({ surah, currentVerse }: Props) {
         >
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
-              <p className="text-2xl font-arabic leading-loose text-secondary-light dark:text-secondary-dark mb-4">
+              <p 
+                className="font-arabic leading-loose text-secondary-light dark:text-secondary-dark mb-4"
+                style={{ fontSize: `${arabicFontSize}px` }}
+              >
                 {verse.ar}
               </p>
-              <p className="text-base text-primary-light dark:text-primary-dark">
+              <p 
+                className="text-primary-light dark:text-primary-dark"
+                style={{ fontSize: `${translationFontSize}px` }}
+              >
                 {verse.tr}
               </p>
             </div>
