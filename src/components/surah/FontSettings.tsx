@@ -1,67 +1,66 @@
+import React from 'react';
 import { Minus, Plus } from 'lucide-react';
 
-interface Props {
+interface FontSettingsProps {
   arabicFontSize: number;
   translationFontSize: number;
-  onArabicFontSizeChange: (size: number) => void;
-  onTranslationFontSizeChange: (size: number) => void;
+  setArabicFontSize: (size: number) => void;
+  setTranslationFontSize: (size: number) => void;
 }
 
-export default function FontSettings({
+const FontSettings: React.FC<FontSettingsProps> = ({
   arabicFontSize,
   translationFontSize,
-  onArabicFontSizeChange,
-  onTranslationFontSizeChange,
-}: Props) {
+  setArabicFontSize,
+  setTranslationFontSize,
+}) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-4">
+    <div className="fixed inset-x-0 bottom-24 mx-auto max-w-sm bg-gray-900/95 backdrop-blur-sm rounded-lg shadow-lg p-4">
       <div className="space-y-4">
-        <div>
-          <h3 className="text-sm font-medium text-secondary-light dark:text-secondary-dark mb-2">
-            Arapça Font Boyutu
-          </h3>
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-base font-medium text-white">Arapça</span>
+            <span className="text-sm text-gray-400">{arabicFontSize}px</span>
+          </div>
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => onArabicFontSizeChange(Math.max(16, arabicFontSize - 2))}
-              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+              onClick={() => setArabicFontSize(Math.max(arabicFontSize - 2, 24))}
+              className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white active:scale-95 transition-all"
             >
-              <Minus className="w-4 h-4" />
+              <Minus size={20} />
             </button>
-            <span className="text-sm text-primary-light dark:text-primary-dark">
-              {arabicFontSize}px
-            </span>
             <button
-              onClick={() => onArabicFontSizeChange(Math.min(48, arabicFontSize + 2))}
-              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+              onClick={() => setArabicFontSize(Math.min(arabicFontSize + 2, 72))}
+              className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white active:scale-95 transition-all"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} />
             </button>
           </div>
         </div>
 
-        <div>
-          <h3 className="text-sm font-medium text-secondary-light dark:text-secondary-dark mb-2">
-            Çeviri Font Boyutu
-          </h3>
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-base font-medium text-white">Çeviri</span>
+            <span className="text-sm text-gray-400">{translationFontSize}px</span>
+          </div>
+          <div className="flex items-center gap-3">
             <button
-              onClick={() => onTranslationFontSizeChange(Math.max(12, translationFontSize - 1))}
-              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+              onClick={() => setTranslationFontSize(Math.max(translationFontSize - 1, 12))}
+              className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white active:scale-95 transition-all"
             >
-              <Minus className="w-4 h-4" />
+              <Minus size={20} />
             </button>
-            <span className="text-sm text-primary-light dark:text-primary-dark">
-              {translationFontSize}px
-            </span>
             <button
-              onClick={() => onTranslationFontSizeChange(Math.min(24, translationFontSize + 1))}
-              className="p-1.5 rounded-lg bg-gray-100 dark:bg-gray-700 text-primary-light dark:text-primary-dark hover:bg-gray-200 dark:hover:bg-gray-600"
+              onClick={() => setTranslationFontSize(Math.min(translationFontSize + 1, 32))}
+              className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 text-white active:scale-95 transition-all"
             >
-              <Plus className="w-4 h-4" />
+              <Plus size={20} />
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default FontSettings;
