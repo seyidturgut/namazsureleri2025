@@ -1,33 +1,18 @@
-import React, { useState } from 'react';
-import { Language } from './types';
-import { surahs } from './data/surahs';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import SurahGrid from './components/surah/SurahGrid';
+import SurahList from './components/SurahList';
 import SurahDetail from './components/SurahDetail';
+import { surahs } from './data/surahs';
 
 export default function App() {
-  const [lang, setLang] = useState<Language>('tr');
-  const [selectedSurahId, setSelectedSurahId] = useState<number | null>(null);
-
-  const selectedSurah = selectedSurahId 
-    ? surahs.find(s => s.id === selectedSurahId)
-    : null;
-
   return (
-    <Layout currentLang={lang} onLanguageChange={setLang}>
-      {selectedSurah ? (
-        <SurahDetail 
-          surah={selectedSurah}
-          lang={lang}
-          onBack={() => setSelectedSurahId(null)}
-        />
-      ) : (
-        <SurahGrid 
-          surahs={surahs}
-          lang={lang}
-          onSelect={setSelectedSurahId}
-        />
-      )}
-    </Layout>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<SurahList surahs={surahs} />} />
+          <Route path="/surah/:id" element={<SurahDetail surahs={surahs} />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
